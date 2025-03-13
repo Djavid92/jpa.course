@@ -1,4 +1,7 @@
-package org.example;
+package jm.task.core.jdbc.dao;
+
+import jm.task.core.jdbc.util.Util;
+import jm.task.core.jdbc.model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,8 +15,10 @@ public class UserDaoJdbcImpl implements UserDao {
                 "name VARCHAR(50), " +
                 "lastName VARCHAR(50), " +
                 "age TINYINT)";
-        try (Connection conn = Util.getConnection();
-             Statement stmt = conn.createStatement()) {
+        Connection conn = null;
+        try { conn = Util.getConnection();
+            Statement stmt = conn.createStatement();
+            System.out.println("Соединение установлено" + conn);
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
             throw new RuntimeException("Ошибка создания таблицы", e);
