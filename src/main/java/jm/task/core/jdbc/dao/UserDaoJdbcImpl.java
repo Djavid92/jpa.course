@@ -68,7 +68,7 @@ public class UserDaoJdbcImpl implements UserDao {
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 User user = new User(rs.getString("name"), rs.getString("lastName"), rs.getByte("age"));
-                user.setId(rs.getLong("id")); // Устанавливаем id через сеттер
+                user.setId(rs.getLong("id"));
                 users.add(user);
             }
         } catch (SQLException e) {
