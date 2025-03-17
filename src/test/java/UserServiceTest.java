@@ -7,11 +7,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class UserServiceTest {
-    private final UserService userService = new UserServiceImpl();
 
     private final String testName = "Ivan";
     private final String testLastName = "Ivanov";
     private final byte testAge = 5;
+
+    private final UserService userService = new UserServiceImpl();
 
 
     @Test
