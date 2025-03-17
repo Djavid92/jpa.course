@@ -16,6 +16,10 @@ public class Util {
     private static final String USERNAME = "jpauser";
     private static final String PASSWORD = "jpapwd";
 
+    public static SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
     public static Connection getConnection() {
         try {
             return DriverManager.getConnection(URL, USERNAME, PASSWORD);
@@ -48,9 +52,5 @@ public class Util {
             e.printStackTrace();
             throw new RuntimeException("Ошибка инициализации SessionFactory");
         }
-    }
-
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
     }
 }
