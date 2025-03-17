@@ -16,6 +16,8 @@ public class Util {
     private static final String USERNAME = "jpauser";
     private static final String PASSWORD = "jpapwd";
 
+    private static final SessionFactory sessionFactory;
+
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
     }
@@ -27,8 +29,6 @@ public class Util {
             throw new RuntimeException("Ошибка подключения к БД", e);
         }
     }
-
-    private static final SessionFactory sessionFactory;
 
     static {
         try {
