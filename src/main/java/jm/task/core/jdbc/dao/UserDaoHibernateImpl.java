@@ -1,5 +1,6 @@
 package jm.task.core.jdbc.dao;
 import jm.task.core.jdbc.model.User;
+
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -8,7 +9,18 @@ import static jm.task.core.jdbc.util.Util.getSessionFactory;
 
 
 public class UserDaoHibernateImpl implements UserDao {
+
     public UserDaoHibernateImpl() {
+    }
+
+    private void executeUpdateSQL(String sql) {
+        try (Session session = getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.createNativeQuery(sql).executeUpdate();
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -34,6 +46,9 @@ public class UserDaoHibernateImpl implements UserDao {
             session.persist(new User(name, lastName, age));
             transaction.commit();
         }
+        catch (Exception e) {
+            throw new RuntimeException("Ошибка добавления пользователя", e);
+        }
     }
 
     @Override
@@ -46,6 +61,9 @@ public class UserDaoHibernateImpl implements UserDao {
             }
             transaction.commit();
         }
+        catch (Exception e) {
+            throw new RuntimeException("Ошибка удаления пользователя", e);
+        }
     }
 
     @Override
@@ -53,21 +71,14 @@ public class UserDaoHibernateImpl implements UserDao {
         try (Session session = getSessionFactory().openSession()) {
             return session.createQuery("FROM User", User.class).list();
         }
+        catch (Exception e) {
+            throw new RuntimeException("Ошибка получени поьзователей", e);
+        }
     }
 
     @Override
     public void cleanUsersTable() {
         String sql = "TRUNCATE TABLE users";
         executeUpdateSQL(sql);
-    }
-
-    private void executeUpdateSQL(String sql) {
-        try (Session session = getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
-            session.createNativeQuery(sql).executeUpdate();
-            transaction.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
